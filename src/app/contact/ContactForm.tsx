@@ -12,15 +12,16 @@ export default function ContactForm() {
     setSubmitting(true);
 
     const form = formRef.current;
-    if (!form) return;
+    if (!form) return;  
 
-    const formData = {
-      name: form.name.value,
-      phone: form.phone.value,
-      email: form.email.value,
-      subject: form.subject.value,
-      message: form.message.value,
+   const formData = {
+      name: (form.elements.namedItem('name') as HTMLInputElement).value,
+      phone: (form.elements.namedItem('phone') as HTMLInputElement).value,
+      email: (form.elements.namedItem('email') as HTMLInputElement).value,
+      subject: (form.elements.namedItem('subject') as HTMLInputElement).value,
+      message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
     };
+
 
     try {
       const res = await fetch('/api/contact', {

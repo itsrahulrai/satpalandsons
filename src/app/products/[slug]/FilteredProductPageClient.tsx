@@ -1,20 +1,30 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { ProductData } from "../../../lib/mockData";
-import TopBar from "../../../components/TopBar";
-import MainNavbar from "../../../components/MainNavbar";
-import Breadcrumb from "../../../components/Breadcrumb";
-import Footer from "../../../components/Footer";
-import ModalPopup from "../ModalPopup";
-import Image from "next/image";
-import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
+import { useState } from 'react';
+import { ProductData } from '../../../lib/mockData';
+import TopBar from '../../../components/TopBar';
+import MainNavbar from '../../../components/MainNavbar';
+import Breadcrumb from '../../../components/Breadcrumb';
+import Footer from '../../../components/Footer';
+import ModalPopup from '../ModalPopup';
+import Image from 'next/image';
+import { FaEnvelope, FaPhoneAlt } from 'react-icons/fa';
+
+// ✅ Define Product type (or import it from mockData if available)
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+  unit: string;
+  image: string;
+  details: { label: string; value: string }[];
+};
 
 export default function FilteredProductPageClient({ slug }: { slug: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null); // ✅ Fixed type
 
-  const categoryName = decodeURIComponent(slug).replace(/-/g, " ").toLowerCase();
+  const categoryName = decodeURIComponent(slug).replace(/-/g, ' ').toLowerCase();
 
   const filteredProducts = ProductData.filter((product) =>
     product.name.toLowerCase().includes(categoryName)
@@ -31,8 +41,7 @@ export default function FilteredProductPageClient({ slug }: { slug: string }) {
           {categoryName}
         </h1>
         <p className="text-gray-600 text-base mb-6">
-          Explore our premium quality products under{" "}
-          <strong>{categoryName}</strong>.
+          Explore our premium quality products under <strong>{categoryName}</strong>.
         </p>
       </div>
 
@@ -75,8 +84,7 @@ export default function FilteredProductPageClient({ slug }: { slug: string }) {
 
                 <p className="text-sm text-gray-600 mb-4">
                   We offer top-grade <strong>{product.name}</strong> known for
-                  durability and performance across various industrial
-                  applications.
+                  durability and performance across various industrial applications.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4">
@@ -118,3 +126,4 @@ export default function FilteredProductPageClient({ slug }: { slug: string }) {
     </>
   );
 }
+  
