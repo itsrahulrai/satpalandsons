@@ -1,6 +1,7 @@
 // src/components/ProductCategories.tsx
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { FaArrowRight } from 'react-icons/fa';
 
 interface Category {
@@ -39,11 +40,12 @@ export default function ProductCategories({ categories }: ProductCategoriesProps
                        hover:bg-gradient-to-r hover:from-[#1A3C6B] hover:via-[#0F2D54] hover:to-[#2C3E50]
                        hover:text-white"
           >
-            <div className="w-20 h-20 flex-shrink-0">
-              <img
+            <div className="w-20 h-20 flex-shrink-0 relative">
+              <Image
                 src={category.image}
                 alt={category.name}
-                className="w-full h-full object-cover rounded-full border border-gray-300"
+                fill
+                className="object-cover rounded-full border border-gray-300"
               />
             </div>
             <h3 className="text-lg font-semibold text-gray-800 flex-1 text-center group-hover:text-white transition-colors duration-300">

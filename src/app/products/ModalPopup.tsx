@@ -5,10 +5,23 @@ import { FaTimes } from "react-icons/fa";
 import Image from "next/image";
 import toast from "react-hot-toast";
 
+interface ProductDetailType {
+  label: string;
+  value: string;
+}
+
+interface ProductType {
+  name: string;
+  price: number;
+  unit: string;
+  image: string;
+  details?: ProductDetailType[];
+}
+
 interface ModalPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  product: any;
+  product: ProductType | null;
 }
 
 const ModalPopup: React.FC<ModalPopupProps> = ({ isOpen, onClose, product }) => {
@@ -20,9 +33,9 @@ const ModalPopup: React.FC<ModalPopupProps> = ({ isOpen, onClose, product }) => 
 
   if (!isOpen || !product) return null;
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.target as HTMLFormElement;
+    const form = e.currentTarget;
     const name = form.name.value.trim();
     const phone = form.phone.value.trim();
     const message = form.message.value.trim();
@@ -49,7 +62,7 @@ const ModalPopup: React.FC<ModalPopupProps> = ({ isOpen, onClose, product }) => 
       } else {
         toast.error(data.message || "Failed to send inquiry.");
       }
-    } catch (err) {
+    } catch {
       toast.error("Something went wrong. Please try again later.");
     } finally {
       setLoading(false);
@@ -74,7 +87,7 @@ const ModalPopup: React.FC<ModalPopupProps> = ({ isOpen, onClose, product }) => 
               ₹ {product.price} / {product.unit}
             </p>
             <ul className="text-xs text-gray-600 mt-2 space-y-1 text-left max-w-xs mx-auto">
-              {product.details?.map((d: any, i: number) => (
+              {product.details?.map((d, i) => (
                 <li key={i}>
                   <strong>{d.label}:</strong> {d.value}
                 </li>
