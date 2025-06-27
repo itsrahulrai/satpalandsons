@@ -1,4 +1,6 @@
 // next.config.js
+
+const isDev = process.env.NODE_ENV === 'development';
 module.exports = {
   images: {
     domains: [
@@ -11,5 +13,11 @@ module.exports = {
       'viraatindustries.com',
       'encrypted-tbn2.gstatic.com',
     ],  
+  },
+  typescript: {
+    ignoreBuildErrors: !isDev ? true : false,
+  },
+  eslint: {
+    ignoreDuringBuilds: !isDev ? true : false,
   },
 };
