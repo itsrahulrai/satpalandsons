@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import Image from "next/image";
 import toast from "react-hot-toast";
+import axios, { AxiosError } from "axios"; // ✅ Axios added
 
 interface ProductDetailType {
   label: string;
@@ -36,9 +37,10 @@ const ModalPopup: React.FC<ModalPopupProps> = ({ isOpen, onClose, product }) => 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const name = form.name.value.trim();
-    const phone = form.phone.value.trim();
-    const message = form.message.value.trim();
+
+    const name = (form.elements.namedItem("name") as HTMLInputElement).value.trim();
+    const phone = (form.elements.namedItem("phone") as HTMLInputElement).value.trim();
+    const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value.trim();
 
     if (!name || !phone) {
       toast.error("Please enter name and phone number.");
@@ -47,27 +49,25 @@ const ModalPopup: React.FC<ModalPopupProps> = ({ isOpen, onClose, product }) => 
 
     setLoading(true);
     try {
-      const res = await fetch("/api/send-inquiry", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone, message, productName: product.name }),
+      const response = await axios.post("/api/send-inquiry", {
+        name,
+        phone,
+        message,
+        productName: product.name,
       });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        toast.success("Inquiry sent successfully!");
-        form.reset();
-        onClose();
-      } else {
-        toast.error(data.message || "Failed to send inquiry.");
-      }
-    } catch {
-      toast.error("Something went wrong. Please try again later.");
+      console.log(response)
+      toast.success("Inquiry sent successfully!");
+      form.reset();
+      onClose();
+    } catch (error) {
+      const err = error as AxiosError<{ message?: string }>;
+      const errorMessage = err.response?.data?.message || "Failed to send inquiry.";
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-2 md:px-4">
@@ -149,9 +149,8 @@ const ModalPopup: React.FC<ModalPopupProps> = ({ isOpen, onClose, product }) => 
             <button
               type="submit"
               disabled={loading}
-              className={`w-full flex justify-center items-center bg-[#011F4B] hover:bg-[#022a6c] text-white py-3 rounded-lg text-sm font-semibold transition duration-300 ${
-                loading ? "opacity-60 cursor-not-allowed" : ""
-              }`}
+              className={`w-full flex justify-center items-center bg-[#011F4B] hover:bg-[#022a6c] text-white py-3 rounded-lg text-sm font-semibold transition duration-300 ${loading ? "opacity-60 cursor-not-allowed" : ""
+                }`}
             >
               {loading ? (
                 <>

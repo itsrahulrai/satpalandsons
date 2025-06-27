@@ -1,13 +1,28 @@
-import type { Metadata } from "next";
-import FilteredProductPageClient from "./FilteredProductPageClient";
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const { ProductData } = await import("../../../lib/mockData");
-  const decodedSlug = decodeURIComponent(params.slug).replace(/-/g, " ");
+import { Metadata } from "next";
+import FilteredProductPageClient from "./FilteredProductPageClient";
+import { ProductData } from "../../../lib/mockData";
+
+
+type Props = {
+  params: Promise<{ slug: string }>
+  // searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+
+
+export async function generateMetadata(
+  { params }: Props
+): Promise<Metadata> {
+  const slug = (await params).slug
+
+  const decodedSlug = decodeURIComponent(slug).replace(/-/g, " ");
   const categoryName = decodedSlug.charAt(0).toUpperCase() + decodedSlug.slice(1);
+
   const matchingProduct = ProductData.find((product) =>
     product.name.toLowerCase().includes(categoryName.toLowerCase())
   );
+
   return {
     title: matchingProduct
       ? `${matchingProduct.name} | Satpal & Sons`
@@ -18,6 +33,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default function Page({ params }: { params: { slug: string } }) {
-  return <FilteredProductPageClient slug={params.slug} />;
+// Page component with correct typing
+export default async function FilteredProductPage({ params }: Props) {
+  const slug = (await params).slug
+  return <FilteredProductPageClient slug={slug} />;
 }
