@@ -8,6 +8,7 @@ import {
   FaFileInvoice,
 } from "react-icons/fa";
 import Image from "next/image";
+import Link from 'next/link';
 
 const companyInfo = [
   {
@@ -123,9 +124,11 @@ export default function AboutCompany() {
           <p className="text-sm text-gray-800 font-medium mb-6">
             GET IN TOUCH WITH US FOR BEST DEALS
           </p>
-          <button className="bg-[#1A3C6B] text-white px-6 py-2 rounded-md font-semibold hover:bg-red-800 transition">
-            Contact Us
-          </button>
+         <Link href="/contact">
+            <button className="bg-[#1A3C6B] text-white px-6 py-2 rounded-md font-semibold transition">
+              Contact Us
+            </button>
+          </Link>
         </div>
       </div>
     </section>
