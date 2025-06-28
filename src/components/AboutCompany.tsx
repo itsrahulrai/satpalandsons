@@ -76,7 +76,7 @@ export default function AboutCompany() {
           <div className="flex items-center gap-4 p-4 rounded-xl bg-teal-50 shadow-sm hover:shadow-md transition">
             <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-white">
               <Image
-               src="/images/trustseal.PNG"
+               src="/images/trustseal.png"
                 alt="Trustseal Verified"
                 width={40}
                 height={40}
