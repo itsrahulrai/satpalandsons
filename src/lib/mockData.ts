@@ -567,12 +567,12 @@ export const ProductData = [
   },
   {
     id: 3,
-    name: 'Color Coated Profile Coil',
+    name: 'Color Coated Coil',
     price: 62,
     unit: 'Kg',
     image: 'https://5.imimg.com/data5/PA/CX/MY-31078081/colour-coated-coil-1000x1000.jpg',
     details: [
-      { label: 'Width', value: '1220mm' },
+      { label: 'Thickness', value: '.25 mm to 2 mm' },
       { label: 'Grade', value: 'G300' },
       { label: 'Finish', value: 'Glossy' },
     ],
@@ -651,12 +651,12 @@ export const ProductData = [
   },
   {
     id: 10,
-    name: 'Z and C Purlin',
+    name: 'C and Z Purlin',
     price: 62,
     unit: 'Kg',
     image: 'https://5.imimg.com/data5/SELLER/Default/2022/1/OL/OO/BR/3010498/z-c-purlin-1000x1000.jpg',
     details: [
-      { label: 'Type', value: 'Z / C Shape' },
+      { label: 'Thickness', value: '1.6 mm to 3 mm' },
       { label: 'Length', value: 'Up to 12 Mtr' },
       { label: 'Application', value: 'Pre-Engineered Buildings' },
     ],
